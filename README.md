@@ -16,6 +16,7 @@
    * [Sensor Data & ROS Bags](#sensor-data-ros-bags)
    * [Image Decompression](#image-decompression)
    * [Image Inversion](#image-inversion)
+- [Evaluation](#evaluation)
 - [Devices](#devices)
    * [Camera (Visual-Inertial Sensor)](#camera-visual-inertial-sensor)
    * [Lidar (Ground Truth Acquisition)](#lidar-ground-truth-acquisition)
@@ -50,7 +51,7 @@ The winning teams will be awarded a prize money, so stay tuned for the full rele
     <td align="center" width="33%">
       <img src="images/outdoor.jpeg" alt="Outdoor">
       <br>
-      <em>Outdoor Building</em>
+      <em>Outdoor View</em>
     </td>
   </tr>
 </table>
@@ -59,7 +60,7 @@ The winning teams will be awarded a prize money, so stay tuned for the full rele
 # Dataset
 The goal of this challenge is to accurately localize the [camera](#camera-visual-inertial-sensor) within the provided floorplans [as described below](#openvins-example).
 
-We are providing 5 samples for a early release (released 1st of December 2026). You can find the public folder [here](https://drive.google.com/drive/folders/19ajbmr7ByWxHiy1X4yqK8W02xUmePGLd?usp=drive_link) or you can directly download the rosbag from the table below: 
+We are providing 5 samples for the early release (released 1st of December 2025). You can find the public folder [here](https://drive.google.com/drive/folders/19ajbmr7ByWxHiy1X4yqK8W02xUmePGLd?usp=drive_link) or you can directly download the rosbag from the table below: 
 | Youtube Video | Rosbag Download | Ground Truth |
 | :---: | :---: | :---: |
 | [Floor_1_2025_05_05_run_1](https://youtu.be/CWM42dc7BLE) | [rosbag.db3](https://drive.google.com/file/d/1PT5qK7UpsAtU02QCTkAB1Tlvzt9k_16-/view?usp=drive_link) | <img src="https://github.com/Hilti-Research/hilti-trimble-slam-challenge-2026-internal/blob/pipeline/GT_plots_early_release/floor_1_gt.png" alt="GT Floor 1" width="400"/> |
@@ -143,6 +144,12 @@ ros2 run challenge_tools_ros rotate_image_180.py /ov_msckf/trackhist
 You can change the topic to another topic, such as `/cam0/image_raw`.
 The rotated topic will be `/cam0/image_raw/rotated`, which you can then visualize to RViz.
 
+<!-- TOC --><a name="evaluation"></a>
+# Evaluation
+The main evaluation metric will be the **Root Mean Square Error (RMSE)** calculated on the **Absolute Pose Error (APE)** between the estimated SLAM trajectory and the reference (Ground Truth) trajectory.
+
+More insights on the exact evaluation procedure will be provided for the official release on the **1st of February**.
+
 
 <!-- TOC --><a name="devices"></a>
 # Devices
@@ -192,6 +199,13 @@ We have tested and configured [OpenVINS](https://docs.openvins.com/getting-start
 <div align="center">
   <img src="images/floor2_openvins_against_traj.png" alt="floor1" width="50%"/>
 </div>
+
+You can read the `gt_poses.csv` files and publish them to Rviz as follows:
+```
+ros2 launch challenge_tools_ros groundtruth_server.launch run_name:=floor_1_2025-05-05_run_1
+```
+
+Please, **note that these reference trajectories are provision and will be adjusted in the coming weeks**.
 
 <!-- TOC --><a name="install-openvins-with-ros2"></a>
 ### Install OpenVINS with ROS2
