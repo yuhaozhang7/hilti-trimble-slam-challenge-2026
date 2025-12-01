@@ -200,6 +200,13 @@ We have tested and configured [OpenVINS](https://docs.openvins.com/getting-start
   <img src="images/floor2_openvins_against_traj.png" alt="floor1" width="50%"/>
 </div>
 
+You can read the `gt_poses.csv` files and publish them to Rviz as follows:
+```
+ros2 launch challenge_tools_ros groundtruth_server.launch run_name:=floor_1_2025-05-05_run_1
+```
+
+Please, **note that these reference trajectories are provision and will be adjusted in the coming weeks**.
+
 <!-- TOC --><a name="install-openvins-with-ros2"></a>
 ### Install OpenVINS with ROS2
 We provide minimal instructions for installing OpenVINS with ROS2. More detailed information can be found in the [official documentation](https://docs.openvins.com/getting-started.html).
