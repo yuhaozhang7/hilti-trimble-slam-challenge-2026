@@ -9,6 +9,7 @@
 
 - [Introduction: Visual-Inertial SLAM Challenge with Additional Building Floorplans](#introduction)
 - [Dataset](#dataset)
+   * [Dataset Floorplans](#dataset-floorplans)
    * [Dataset Properties](#dataset-properties)
    * [Environment Description](#environment-description)
    * [Ground Truth](#ground-truth)
@@ -84,6 +85,14 @@ BuchsIT/
             ├── trajectory.csv  # GT trajectory (Euroc format, Floor UG only)
             ├── floor_X_gt.png 
 ```
+
+<!-- TOC --><a name="dataset-floorplans"></a>
+## Dataset Floorplans
+Together with the dataset, we provide floorplans in binary format, which can be converted into occupancy maps using the following [script](scripts/challenge_tools_ros/map_server.py)￼ if needed.
+
+<div align="center">
+  <img src="images/binary_floorplan_floor1.png" alt="floor1 floorplan" width="50%"/>
+</div>
 
 <!-- TOC --><a name="dataset-properties"></a>
 ## Dataset Properties
