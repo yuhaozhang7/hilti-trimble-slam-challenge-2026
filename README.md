@@ -27,6 +27,14 @@
    * [OpenVINS Example](#openvins-example)
    * [Stella-VSLAM Example](#stella-vslam-example)
 
+----------
+
+> [!IMPORTANT]
+> The final release for the SlamChallenge 2026 is on February 3rd.
+> Visit the **[official webpage](https://hilti-trimble-challenge.com/)** for details.
+
+----------
+
 <!-- TOC --><a name="introduction"></a>
 # 360° Camera-Based Visual-Inertial SLAM Challenge with Additional Building Floorplans
 
