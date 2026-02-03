@@ -6,7 +6,7 @@
   <a href="https://scholar.google.com/citations?hl=it&user=677n63kAAAAJ">Samuele Centanni</a><sup>*</sup>,
   <a href="https://scholar.google.com/citations?hl=en&user=8afWaIUAAAAJ">Yuhao Zhang</a><sup>*</sup>,
   <a href="https://scholar.google.com/citations?hl=en&user=T0M78kEAAAAJ">Yifu Tao</a>,
-  <a href="https://scholar.google.com/citations?hl=en&user=lVIr3qcAAAAJ">Julian Kindle</a>,
+  <a href="https://scholar.google.com/citations?hl=en&user=lVIr3qcAAAAJ">Julien Kindle</a>,
   <a href="https://scholar.google.com/citations?hl=en&user=Vxwg0vcAAAAJ">Frank Neuhaus</a>,
   <a href="https://scholar.google.com/citations?hl=en&user=d1xlF6AAAAAJ">Tilman Koß</a>,
   <a href="https://scholar.google.com/citations?hl=en&user=8I_26uEAAAAJ">Aryaman Patel</a>,
