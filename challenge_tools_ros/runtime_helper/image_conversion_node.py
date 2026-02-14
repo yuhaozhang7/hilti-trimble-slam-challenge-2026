@@ -6,25 +6,24 @@
 import sys
 from typing import List
 
-import rclpy
-from rclpy.node import Node
-
-from sensor_msgs.msg import CompressedImage, Image
 import cv2
-import numpy as np
-from cv_bridge import CvBridge
-
 import message_filters
+import numpy as np
+import rclpy
+from cv_bridge import CvBridge
+from rclpy.node import Node
+from sensor_msgs.msg import CompressedImage, Image
 
 
 class ImageConversionNode(Node):
-    def __init__(self, input_topics: List[str], output_topics: List[str]):
+    def __init__(self, input_topics: List[str], output_topics: List[str], desired_encoding: str = ""):
         super().__init__('image_conversion_node')
 
         self._bridge = CvBridge()
         self._input_topics = input_topics
         self._output_topics = output_topics
         self._num_topics = len(input_topics)
+        self._desired_encoding = desired_encoding
 
         self._sync_count = 0
         self._last_sync_count = 0
@@ -82,17 +81,24 @@ class ImageConversionNode(Node):
                 raise RuntimeError("cv2.imdecode returned None (invalid/unsupported compressed data)")
 
             # Determine encoding for cv_bridge
-            if cv_img.ndim == 2:
-                encoding = "mono8"
-            elif cv_img.ndim == 3:
-                if cv_img.shape[2] == 3:
-                    encoding = "bgr8"
-                elif cv_img.shape[2] == 4:
-                    encoding = "bgra8"
+            if self._desired_encoding:
+                encoding = self._desired_encoding
+                if encoding == "mono8" and cv_img.ndim == 3:
+                    cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2GRAY)
+                elif encoding == "bgr8" and cv_img.ndim == 2:
+                    cv_img = cv2.cvtColor(cv_img, cv2.COLOR_GRAY2BGR)
+            else:
+                if cv_img.ndim == 2:
+                    encoding = "mono8"
+                elif cv_img.ndim == 3:
+                    if cv_img.shape[2] == 3:
+                        encoding = "bgr8"
+                    elif cv_img.shape[2] == 4:
+                        encoding = "bgra8"
+                    else:
+                        encoding = "bgr8"
                 else:
                     encoding = "bgr8"
-            else:
-                encoding = "bgr8"
 
             img_msg = self._bridge.cv2_to_imgmsg(cv_img, encoding=encoding)
             # preserve header (timestamp + frame_id)
@@ -113,24 +119,28 @@ def main(args=None):
         if not a.startswith('-') and ':=' not in a and not a.startswith('__')
     ]
 
-    if len(user_args) not in (2, 4):
+    if len(user_args) not in (2, 3, 4, 5):
         print("\nUsage:")
         print("  Single input:")
-        print("    ros2 run <pkg> image_conversion_node.py <in1> <out1>")
+        print("    ros2 run <pkg> image_conversion_node.py <in1> <out1> [encoding]")
         print("")
         print("  Two inputs:")
-        print("    ros2 run <pkg> image_conversion_node.py <in1> <in2> <out1> <out2>\n")
+        print("    ros2 run <pkg> image_conversion_node.py <in1> <in2> <out1> <out2> [encoding]\n")
         rclpy.shutdown()
         return
 
-    if len(user_args) == 2:
+    desired_encoding = ""
+    if len(user_args) in (3, 5):
+        desired_encoding = user_args[-1]
+
+    if len(user_args) in (2, 3):
         input_topics = [user_args[0]]
         output_topics = [user_args[1]]
     else:
         input_topics = [user_args[0], user_args[1]]
         output_topics = [user_args[2], user_args[3]]
 
-    node = ImageConversionNode(input_topics, output_topics)
+    node = ImageConversionNode(input_topics, output_topics, desired_encoding)
 
     try:
         rclpy.spin(node)
