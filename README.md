@@ -483,7 +483,7 @@ An example of Stella-VSLAM running on stitched images is shown below:
 In **Terminal 2**, launch the `image_conversion_node` if the bag stores images as `CompressedImage`:
 
 ```
-ros2 run challenge_tools_ros image_conversion_node.py /cam0/image_raw/compressed /camera/image_raw
+ros2 run challenge_tools_ros image_conversion_node.py /cam0/image_raw/compressed /camera/image_raw mono8
 ```
 
 Here, `/cam0/image_raw/compressed` is the compressed image topic in the bag, and `/camera/image_raw` is the image topic that Stella-VSLAM subscribes to. 
